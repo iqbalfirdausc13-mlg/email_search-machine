@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cari Email Mahasiswa</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input { padding: 8px; }
+    button { padding: 8px 12px; }
+  </style>
+</head>
+<body>
+  <h2>Cari Email berdasarkan NIM</h2>
+  <input id="nim" placeholder="Masukkan NIM">
+  <button onclick="cari()">Cari</button>
+  
+  <p id="hasil"></p>
+
+  <script>
+    async function cari() {
+      const nim = document.getElementById("nim").value;
+      const url = "YOUR_API_URL?nim=" + nim; // Ganti setelah API jadi
+
+      const response = await fetch(url);
+      const data = await response.json();
+
+      document.getElementById("hasil").innerText = "Email: " + data.email;
+    }
+  </script>
+</body>
+</html>

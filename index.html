@@ -1,63 +1,130 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Email Search Machine</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 500px;
-      margin: 40px auto;
-      padding: 20px;
-      border-radius: 12px;
-      background: #f8f9fa;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    input, button {
-      padding: 10px;
-      font-size: 16px;
-    }
-    #result {
-      margin-top: 20px;
-      padding: 15px;
-      background: white;
-      border-radius: 10px;
-      border: 1px solid #ddd;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Search Machine</title>
+
+<style>
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #eef1f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .container {
+    background: white;
+    width: 90%;
+    max-width: 450px;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: 0.2s;
+  }
+
+  input:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 6px rgba(74,144,226,0.4);
+  }
+
+  button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px;
+    font-size: 17px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    background: #4a90e2;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  button:hover {
+    background: #3d7ec8;
+  }
+
+  #result {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    min-height: 40px;
+    transition: 0.2s;
+  }
+
+  .loading {
+    text-align: center;
+    color: #4a90e2;
+    font-weight: bold;
+  }
+</style>
+
 </head>
 <body>
 
+<div class="container">
   <h2>Cari Email Berdasarkan NPM</h2>
 
   <input id="npmInput" type="text" placeholder="Masukkan NPM">
   <button onclick="searchNPM()">Cari</button>
 
   <div id="result"></div>
+</div>
 
-  <script>
-    function searchNPM() {
-      const npm = document.getElementById("npmInput").value.trim();
-      const resultDiv = document.getElementById("result");
+<script>
+  // Tekan Enter langsung cari
+  document.getElementById("npmInput").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") searchNPM();
+  });
 
-      if (!npm) {
-        resultDiv.innerHTML = "<b>Masukkan NPM terlebih dahulu.</b>";
-        return;
-      }
+  function searchNPM() {
+    const npm = document.getElementById("npmInput").value.trim();
+    const resultDiv = document.getElementById("result");
 
-      const apiUrl = "https://script.google.com/macros/s/AKfycbyuPXqiSLmzT8GEuIp6GkIH2QOavWZwGGtYySTUQtMqmYFcE01yAVpWbXGYYqq64kL_qw/exec?npm=" + encodeURIComponent(npm);
-
-      fetch(apiUrl)
-        .then(response => response.text())
-        .then(html => {
-          // API kamu sudah mengembalikan HTML → langsung tampilkan
-          resultDiv.innerHTML = html;
-        })
-        .catch(error => {
-          resultDiv.innerHTML = "<b>Terjadi error saat menghubungi API.</b>";
-        });
+    if (!npm) {
+      resultDiv.innerHTML = "<b>Masukkan NPM terlebih dahulu.</b>";
+      return;
     }
-  </script>
+
+    resultDiv.innerHTML = "<div class='loading'>Mencari data...</div>";
+
+    const apiUrl = "https://script.google.com/macros/s/AKfycbyuPXqiSLmzT8GEuIp6GkIH2QOavWZwGGtYySTUQtMqmYFcE01yAVpWbXGYYqq64kL_qw/exec?npm=" 
+                    + encodeURIComponent(npm);
+
+    fetch(apiUrl)
+      .then(response => response.text())
+      .then(html => {
+        resultDiv.innerHTML = html;
+      })
+      .catch(error => {
+        resultDiv.innerHTML = "<b style='color:red;'>Terjadi error saat menghubungi API.</b>";
+      });
+  }
+</script>
 
 </body>
 </html>

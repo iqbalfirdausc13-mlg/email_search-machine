@@ -1,30 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Cari Email Mahasiswa</title>
+  <meta charset="UTF-8">
+  <title>Email Search Machine</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    input { padding: 8px; }
-    button { padding: 8px 12px; }
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+      border-radius: 12px;
+      background: #f8f9fa;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      background: white;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
   </style>
 </head>
 <body>
-  <h2>Cari Email berdasarkan NIM</h2>
-  <input id="nim" placeholder="Masukkan NIM">
-  <button onclick="cari()">Cari</button>
-  
-  <p id="hasil"></p>
+
+  <h2>Cari Email Berdasarkan NIM</h2>
+
+  <input id="nimInput" type="text" placeholder="Masukkan NIM">
+  <button onclick="searchNIM()">Cari</button>
+
+  <div id="result"></div>
 
   <script>
-    async function cari() {
-      const nim = document.getElementById("nim").value;
-      const url = "https://script.google.com/a/macros/upnjatim.ac.id/s/AKfycbwxvrGAOJ8YL9EZQUzIdDD4Mj8lyVbKKJUp8jbN6GBZfKtLKHUiZtJCklXpL1r34PbQvg/exec?nim=" + nim; // Ganti setelah API jadi
+    function searchNIM() {
+      const nim = document.getElementById("nimInput").value.trim();
+      const resultDiv = document.getElementById("result");
 
-      const response = await fetch(url);
-      const data = await response.json();
+      if (!nim) {
+        resultDiv.innerHTML = "<b>Masukkan NIM terlebih dahulu.</b>";
+        return;
+      }
 
-      document.getElementById("hasil").innerText = "Email: " + data.email;
+      const apiUrl = "YOUR_API_URL_HERE?nim=" + encodeURIComponent(nim);
+
+      fetch(apiUrl)
+        .then(response => response.text())
+        .then(html => {
+          // API kamu sudah mengembalikan HTML → langsung tampilkan
+          resultDiv.innerHTML = html;
+        })
+        .catch(error => {
+          resultDiv.innerHTML = "<b>Terjadi error saat menghubungi API.</b>";
+        });
     }
   </script>
+
 </body>
 </html>

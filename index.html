@@ -28,24 +28,24 @@
 </head>
 <body>
 
-  <h2>Cari Email Berdasarkan NIM</h2>
+  <h2>Cari Email Berdasarkan NPM</h2>
 
-  <input id="nimInput" type="text" placeholder="Masukkan NIM">
-  <button onclick="searchNIM()">Cari</button>
+  <input id="npmInput" type="text" placeholder="Masukkan NPM">
+  <button onclick="searchNPM()">Cari</button>
 
   <div id="result"></div>
 
   <script>
-    function searchNIM() {
-      const nim = document.getElementById("nimInput").value.trim();
+    function searchNPM() {
+      const npm = document.getElementById("npmInput").value.trim();
       const resultDiv = document.getElementById("result");
 
-      if (!nim) {
-        resultDiv.innerHTML = "<b>Masukkan NIM terlebih dahulu.</b>";
+      if (!npm) {
+        resultDiv.innerHTML = "<b>Masukkan NPM terlebih dahulu.</b>";
         return;
       }
 
-      const apiUrl = "YOUR_API_URL_HERE?nim=" + encodeURIComponent(nim);
+      const apiUrl = "https://script.google.com/macros/s/AKfycbzmIyX2fOrqI-dNRJydPXWsz4Pcoy-Z8OD9KiTVozR8?npm=" + encodeURIComponent(npm);
 
       fetch(apiUrl)
         .then(response => response.text())

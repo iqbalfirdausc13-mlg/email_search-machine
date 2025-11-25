@@ -18,7 +18,7 @@
   <script>
     async function cari() {
       const nim = document.getElementById("nim").value;
-      const url = "YOUR_API_URL?nim=" + nim; // Ganti setelah API jadi
+      const url = "https://script.google.com/a/macros/upnjatim.ac.id/s/AKfycbwxvrGAOJ8YL9EZQUzIdDD4Mj8lyVbKKJUp8jbN6GBZfKtLKHUiZtJCklXpL1r34PbQvg/exec?nim=" + nim; // Ganti setelah API jadi
 
       const response = await fetch(url);
       const data = await response.json();

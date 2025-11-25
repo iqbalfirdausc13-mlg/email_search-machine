@@ -116,13 +116,22 @@
                     + encodeURIComponent(npm);
 
     fetch(apiUrl)
-      .then(response => response.text())
-      .then(html => {
-        resultDiv.innerHTML = html;
-      })
-      .catch(error => {
-        resultDiv.innerHTML = "<b style='color:red;'>Terjadi error saat menghubungi API.</b>";
-      });
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) {
+      resultDiv.innerHTML = "<b>" + data.error + "</b>";
+    } else {
+      resultDiv.innerHTML = `
+        <b>Hasil:</b><br>
+        Email Student: ${data.email_student} <br>
+        Gmail 1: ${data.email_gmail1} <br>
+        Gmail 2: ${data.email_gmail2} <br>
+      `;
+    }
+  })
+  .catch(error => {
+    resultDiv.innerHTML = "<b style='color:red;'>Terjadi error.</b>";
+  });
   }
 </script>
 
